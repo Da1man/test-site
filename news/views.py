@@ -15,4 +15,4 @@ def new_single(request, pk):
     '''
 
     new = get_object_or_404(News, id=pk)
-    return render(request, 'news/news_single.html', {'new': new})
+    return render(request, 'news/new_single.html', {'new': new})
