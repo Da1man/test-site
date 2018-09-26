@@ -13,7 +13,22 @@ def news_list(request):
 def new_single(request, pk):
     '''Вывод одной статьи
     '''
-
     new = get_object_or_404(News, id=pk)
-    comment = Comments.objects.filter(new=pk)
-    return render(request, 'news/new_single.html', {'new': new})
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form =form.save(commit=False)
+            form.user = request.user
+            form.new = new
+            form.save()
+
+    else:
+
+        comment = Comments.objects.filter(new=pk)
+        form = CommentForm()
+
+    return render(request, 'news/new_single.html',
+                  {'new': new,
+                   'comments': comment,
+                   'form': form}
+                  )

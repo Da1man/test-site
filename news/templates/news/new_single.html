@@ -6,10 +6,21 @@
 {% block content %}
     <h1>{{ new.title }}</h1>
     <p>{{ new.text }}</p><hr>
+
     Категория: {{ new.category }} <br>
     Теги - {% for tag in new.tag.all %}
         {{ tag.title }}
     {% endfor %}<br>
 
-    Автор: {{ new.user }} - {{ new.created }}
+    Автор: {{ new.user }} - {{ new.created }}<hr>
+    {% for comment in comments %}
+        Пользователь - {{ comment.user }}<br>
+        {{ comment.text }}<br>
+        {{ comment.created }}
+    {% endfor %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
 {% endblock content %}
